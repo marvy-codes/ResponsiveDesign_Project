@@ -1,0 +1,358 @@
+:root {
+    box-sizing: border-box;
+    font-size: calc(1vw + 0.6em); /* Base font size scale slightly with the viewport*/
+}
+@media (min-width: 50em) {
+    :root {
+    font-size: 1.125em;  /* Applies a non-scaling font size above the highest breakpoint */
+    }
+}
+
+*,
+*::before,
+*::after{
+    box-sizing: inherit;
+}
+body {
+    margin: 0;
+    font-family: Helvetica, Arial, sans-serif;
+}
+a:link {
+    color: #1476b8;
+    font-weight: bold;
+    text-decoration: none;
+}
+a:visited {
+    color: #1430b8;
+}
+a:hover {
+    text-decoration: underline;
+}
+a:active {
+    color: #b81414;
+}
+
+.page-header {
+    padding: 0.4em 1em;
+    background-color: #fff;
+}
+
+@media (min-width: 35em) {
+    .page-header {
+        padding: 1em; /* Increasing header padding */
+    }
+}
+@media (min-width: 50em) {
+    .page-header {
+        padding: 1em 4em;  /* Increases left and right padding of the edges of the page to 4em. */
+    }
+}
+
+.title > h1 {
+    color: #333;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    margin: 0.2em 0;
+}
+.slogan {
+    color: #888;
+    font-size: 0.875em;
+    margin: 0;
+}
+
+.hero {
+    padding: 2em 1em;
+    text-align: center;
+    background-image: url(coffee-bean.jpeg); /* Adds the hero image to the page */
+    background-size: 100%;
+    color: #fff;
+    text-shadow: 0.15em 0.15em 0.35em rgb(0, 0, 0);  /* A dark text shadow helps light text remain readable in front of complex background */
+}
+
+@media (min-width: 35em) {
+    .hero {
+        padding: 5em 3em; /* Increases hero image padding and font size */
+        font-size: 1.2rem;
+    }
+}
+@media (min-width: 50em) {
+    .hero {
+        padding: 7em 6em; /* increases hero padding on all sides for a larger hero image*/
+    }
+}
+
+main {
+    padding: 1em;
+}
+@media (min-width: 35em) {
+    main {
+    padding: 2em 1em;  /* Increase padding on main */
+    }
+}
+@media (min-width: 50em) {
+    main {
+    padding: 2em 4em;  /* increases left and right padding of the edges of the page to 4em*/
+    }
+}
+
+
+.subtitle {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+}
+
+/* Writing code in any language it is often an iterative process, and CSS is no different. */
+/* It’s important that you place the button to reveal your menu within the <nav>, otherwise the user would jump to to-and find it empty. */
+/* The controversal hamburger menu: popular, allows more info to be fitted on smaller screen--- */
+
+.menu{
+    position: relative;  /* establishes containing block for absolute positioning of children */
+}
+.menu-toggle {
+    position: absolute;
+    top: -1.2em;
+    right: 0.1em; /* A negative top pulls the button up outside its containing block */
+
+    border: 0;   /* Overrides user agent button styles */
+    background-color: transparent;
+
+    font-size: 3em;
+    width: 1em;
+    height: 1em;
+    line-height: 0.4;
+    text-indent: 5em;  /* Hides the text content of the button and fixes its size at 1 em */
+    white-space: nowrap;
+    overflow: hidden;
+}
+.menu-toggle::after {
+    position: absolute;
+    top: 0.2em;
+    left: 0.2em;
+    display: block;
+    content: "\2261"; /* overlays the button with a unicode symbol, the hamburger icon */
+    text-indent: 0;
+}
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: 0;
+}
+.menu.is-open .menu-dropdown {
+    display: block;   /* Displays the dropdown menu when the class is-open is added to the menu */
+}
+
+/* Next, let’s work on the menu. This will involve two changes: First, you’ll remove the open and close behavior 
+    of the dropdown so it’s always visible. Second, you’ll change the menu from vertically stacked links into horizontal ones. */
+    @media (min-width: 35em) {
+    .menu-toggle {
+        display: none; /* Hides toggle button and...*/
+        }
+    .menu-dropdown {
+        display: block; /* .... reveals the dropdown contents*/
+        position: static; /* overrides the positioning */
+    }
+}
+
+
+.nav-menu {
+    margin: 0;
+    padding-left: 0;
+    border: 1px solid #ccc;
+    list-style: none;
+    background-color: #000;
+    color: #fff;
+    width: 12em;
+    margin-left: auto;
+}
+.nav-menu > li + li {
+    border-top: 1px solid #ccc; /* Applies a border between each menu item */
+}
+.nav-menu > li > a {
+    display: block;
+    padding: 0.8em 1em;  /* Uses a healthy amount of padding to ensure a large clickable area */
+    color: #fff;
+    font-weight: normal;
+}
+/* when designing for mobile touch devices, make all key action items large enough to easily tap with a finger, DON'T MAKE USER ZOOM TO TAP */
+
+/* Even though the menu had a lot of complicated styles to make the mobile layout work, it doesn’t take much to override those and revert the layout
+   to a static, block display element. You won’t need to override the top, left, and right properties from the mobile styles, as those now have no effect 
+   with static positioning.
+ 
+   Flexbox makes a great approach here for the list items; they’ll grow to fill the available width, also this time reducing padding cus the viewport is 
+   larger and the user isn't on a small phone, the clickable areas dont need to be quite large.
+*/
+
+
+@media (min-width: 35em) {
+    .nav-menu {
+        display: flex; /* Changes the menu to a flex container and.... */
+        border: 0;
+        padding: 0 1em;
+        margin-left: 0;
+        width: auto;
+    }
+    .nav-menu > li {
+        flex: 1; /* ..... allows items to grow to fill the screen width */
+    }
+    .nav-menu > li + li {
+        border: 0;
+    }
+    .nav-menu > li > a {
+        padding: 0.3em;
+        text-align: center;
+    } 
+}
+@media (min-width: 50em) {
+    .nav-menu {
+    padding: 0 4em; /* increases left and right padding on edges of the page to 4em*/
+    }
+}
+
+/*  You might be wondering how I arrived at a breakpoint of 35 em in listing 8.7. I chose it because this is the point where
+    the three columns started to feel overcrowded. In this case, below 35 ems, the columns were too narrow. */
+
+/*  Web designer Brad Frost has compiled a list of responsive patterns that you can 
+    browse at https://bradfrost.github.io/this-is-responsive/patterns.html. You can arrange
+    your columns for responsive design as a wide column and a narrow column, equalwidth columns, or a two-column or three-column layout, to name a few
+    examples.*/
+
+/*  Sometimes, you won’t even need the media queries, as natural line wrapping will take care of that for you. Flexbox layouts using flex-wrap: wrap
+    and a reasonable flex-basis is an excellent way to do this. Similarly, a grid layout with auto-fit or auto-fill grid columns will determine how many
+    items will fit in a row before wrapping to a new one. You could also use inline-block elements, though in that case, they won’t grow to fill the width
+    of the container.*/
+
+ /* WANTED: MEDIA QUERIES:  The only way to achieve this layout is through the use of carefully constructed descendant selectors that would account for
+    this scenario (for example, .column .media > .media-image), but this approach can be fragile. */
+@media (min-width: 35em) {
+    .row {   
+        display: flex; /* uses flex-box for equal width column */
+        margin-left: -.75em; /* uses negative margins to widen the row container to compensate for column margins */
+        margin-right: -.75em;
+    }
+    .column {
+        flex: 1;
+        margin-right: 0.75em; /* Adds column gutters*/
+        margin-left: 0.75em;
+    }
+}
+
+/* TIPS: The DevTools in modern browser has ability to emulate smaller sized viewport and behaviour of the viewport meta tag moreinfo: page 213 [241] 
+    https://developers.google.com/web/tools/chrome-devtools/device-mode/ (Chrome) */
+/* for more information on viewport tag check https://developer.mozilla.org/en-US/docs/Mozilla/Mobile/Viewport_meta_tag. */
+
+/* WARNING You should use ems for media query breakpoints. */
+
+/* so (usually 16px ), instead of 560px, you should use 35em (560/16)*/
+
+@media (min-width: 35em) {  /* Targets breakpoints above 35em */
+    .title > h1 {
+    font-size: 2.25rem;  /* Overrides the moible font(1.5rem) with a larger one */
+    }
+}
+/* See the MDN documentation at https://developer.mozilla.org/en-US/docs/Web/ CSS/@media for a complete list of media features. */
+
+/*  In short, the best way to target a high resolution (retina) display is to combine the two: 
+@media (-webkit-min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi) { … }  This approach will work on all modern browsers. Use it when you want to serve higher-resolution imagery or icons 
+        to screens that can benefit from them. This way users with lower-resolution screens won't waste bandwidth loading larger images when they won't
+         see d diff.*/
+ 
+/* TIP: You can also place media query in <link> tag  eg = <link rel="stylesheet" media="(min-width: 45em)" href="large-screen.css"/> note; code will 
+always dowmload if its used or not */         
+
+/* MEDIA TYPES ==> Generally (screen and print) use the query @media print for print and viceversa for screen */
+
+/* CONSIDERATIOND FOR PRINT STYLES: Use display: none to hide non-essential parts of the page,  can also globally change font colors to black and remove
+ all background images and color behind blocks of text. 
+    
+    @media print {
+    * {
+        color: black !important;
+        background: none !important;
+    }
+}
+ If you’re working on a site where you expect a lot of printing (for example, a recipe site), you’ll want to spend more time making sure everything prints correctly. */
+
+/* In addition to adding the @media rule  It’s generally best to add each change immediately following the rules for the associated selectors. */
+
+/* Always be sure each media query comes after the styles it overrides, so the styles within the media query take precedence. */
+
+/* FLUID LAYOUTS: sometimes called liquid layout, makes use of percentages, this way no matter the screen width the containers fit within */
+/* Do make it a habit to think of container widths in percentages rather than in any fixed size */
+
+/* DEALING WITH TABLES: Tables are particularly problematic for fluid layout on mobile devices, sometimes they can overflow, if possible find another 
+    way to organize eg stacking the data atop each other display: block applied to each row and cell */
+
+/* FORCING A RESPONSIVE TABLE LAYOUT ON A MOBILE DEVICES */
+/*
+table {
+    width: 100%;
+}
+@media (max-width: 30em) {
+    table, thead, tbody, tr, th, td {
+        display: block;   Makes all table elements block display
+    }
+    thead tr {
+        position: absolute;  Hides the headings row by moving it off the screen
+        top: -9999px;
+        left: -9999px;
+    }
+    tr {
+        margin-bottom: 1em; Adds a little space between each set of table data
+    }
+}
+*/
+
+/*  RESPONSIVE IMAGES: 1. Always make sure your images are well compressed eg save for web option in image editors or use image compression tools like
+ https://tinypng.com/  */
+/*
+.hero {
+    padding: 2em 1em;
+    text-align: center;
+    background-image: url(coffee-beans-small.jpg); ===> uses the smallest image on mobile devices
+    background-size: 100%;
+    color: #fff;
+    text-shadow: 0.1em 0.1em 0.3em #000;
+}
+@media (min-width: 35em) {
+ .hero {
+    padding: 5em 3em;
+        font-size: 1.2rem;
+        background-image: url(coffee-beans-medium.jpg); ===> uses a larger image on medium-size screens
+    }
+}
+@media (min-width: 50em) {
+    .hero {
+        padding: 7em 6em;
+        background-image: url(coffee-beans.jpg); ===> uses the full resolution image on large screens
+    }
+}
+
+saves kilobytes and makes pages load faster 
+
+USING SRCSET: Media queries solve problem when the image is included via the css, images added via HTML <img> tag uses the srcset approach
+<img alt="A white coffee mug on a bed of coffee beans"
+    src="coffee-beans-small.jpg"   ===> supplies a normal source for browsers that doesn't support srcset (eg IE and Opera Mini)
+    srcset="coffee-beans-small.jpg 560w, coffee-beans-medium.jpg 800w, coffee-beans.jpg 1280w"
+/>
+
+ For a closer look at responsive images, visit https://jakearchibald.com/2015/anatomy-of-responsive-images/. 
+ 
+ TIP: As part of a fluid layout, you should always ensure images don’t overflow their container’s width. Do yourself a favor and always add this rule to
+ your stylesheet to prevent that from happening: img { max-width: 100%; }.
+
+ Structuring regions of the page in responsive design can be done in countless ways. Building any of them comes down to the application of the three
+ principles—mobile first, media queries, and fluid layout.
+ 
+ ===> Summary
+ Always build your designs mobile first.
+ Use media queries to progressively enhance the page at larger and larger viewports.
+ Use fluid layouts that fit the screen at any browser size.
+ Use responsive images to fit the bandwidth limitation of mobile devices.
+ Don’t forget to include your meta viewport tag.
+*/

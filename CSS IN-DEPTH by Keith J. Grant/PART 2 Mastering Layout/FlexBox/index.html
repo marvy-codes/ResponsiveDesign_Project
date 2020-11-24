@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Viewport meta tag. -->
+    <title>Responsive Design</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <!-- This approach, popularized by web designer Ethan Marcotte, is called responsive design. -->
+    <!-- Newspaper sites are particularly interesting because they have so much content crammed onto the page. -->
+    <!-- www.bostonglobe.com/ is a great example, offering a one-, two-, or three-column layout depending on the width of your browser window. -->
+    <!-- Typicallly, you can resize the width of the browser window and see the page layout respond immediately. -->
+    <!-- The three key principles to responsive design:
+===> 1. A mobile first approach to design... This means you build the mobile version before you construct the desktop layout.
+===> 2. The @media at-rule... With this rule, you can tailor your styles for viewports of different sizes. writing styles for diffrent conditions.
+===> 3. The use of fluid layouts...  This approach allows containers to scale to different sizes based on the width of the viewport. -->
+
+    <!-- breakpoint—A particular point at which the page styles change to provide the best possible layout for the screen size. -->
+
+    <!-- Because you’ll build the mobile design first, it’s important to have an idea of how the larger viewports will look as that can influence 
+        how you structure the HTML. -->
+    
+    <!--  The markup looks much the same as that for a non-responsive design. I’ve made a couple of considerations for the mobile design. -->
+    <header id="header" class="page-header">
+        <div class="title">
+            <h1>Wombat Coffee Roasters</h1>
+            <div class="slogan">We love coffee</div>
+        </div>
+    </header>
+
+    <nav class="menu" id="main-menu">
+        <button class="menu-toggle" id="toggle-menu"><!-- Adds the hamburger button for a mobile menu. -->toggle menu</button>
+        <div class="menu-dropdown">  <!-- main menu that will be hidden by default on mobile devices. -->
+            <ul class="nav-menu">
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/shop.html">Shop</a></li>
+                <li><a href="/menu.html">Menu</a></li>
+                <li><a href="/brew.html">Brew</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <aside id="hero" class="hero">Welcome to Wombat Coffee Roasters! We are passionate about our craft, striving to bring you
+        the best hand-crafted coffee in the city.
+    </aside>
+
+    <main id="main">
+        <div class="row">   <!-- Adds row and columns for medium and large view ports.  -->
+            <section class="column">
+                <h2 class="subtitle">Single-origin</h2>
+                <p>We have built partnerships with small farms around the world to hand-select beans at the peak of season. We then carefully roast in
+                    <a href="/batch-size.html">small batches</a> to maximize their potential.
+                </p>
+            </section>
+
+            <section class="column">
+                <h2 class="subtitle">Blends</h2> 
+                <p>Our tasters have put together a selection of carefully balanced blends. Our famous
+                    <a href="/house-blend.html">house blend</a> is available year round.
+                </p>
+            </section>
+            
+            <section class="column">
+                <h2 class="subtitle">Brewing Equipment</h2>
+                <p>We offer our favorite kettles, French presses, and pour-over cones. Come to one of
+                    our <a href="/classes.html">brewing classes</a> to learn how to brew the perfect pour-over cup.
+                </p>
+            </section>
+        </div>
+    </main>
+<script type="text/javascript">
+    (function () {
+        var button = document.getElementById('toggle-menu');
+        button.addEventListener('click', function(event) {   // click-event listener(also fires on a touchscreen tap event)
+            event.preventDefault();
+            var menu = document.getElementById('main-menu');
+            menu.classList.toggle('is-open');  // Toggles is-open class on the main-menu
+        });
+    })();
+</script>
+</body>
+</html>
