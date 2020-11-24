@@ -1,0 +1,203 @@
+/* Applying display: flex to an element turns it into a flex container, and its direct children turn into flex items. */
+/* display: inline-flex; unlike flex will not grow automatically to 100% of the width and it flows inline with other element */
+/* flexbox => flex container, flex item, main axes, cross axes  TOTAL-LINES === 117*/
+:root {
+    box-sizing: border-box;
+}
+*,
+::before,
+::after {
+    box-sizing: inherit;
+    /*global box-sizing fix*/
+}
+body {
+    background-color: #709b90;
+    font-family: Helvetica, Arial, sans-serif;
+}
+body * + * {
+    margin-top: 1.5em;
+    /*Global top margins*/
+} 
+.container {
+    max-width: 1080px;
+    margin: 0 auto;
+    /*Double-container to center page contents */
+} 
+/* --- VENDOR PREFIX --- */
+/*  Older browsers require vendor prefixes on flexbox attributes in order for them to work.....
+    Automate this process with a tool called Autoprefixer, which is available at.....
+    https://github.com/postcss/autoprefixer. This tool parses your CSS and outputs a new file with all the relevant prefixes added where necessary.....
+    It’s important to know too, that the concept of prefixes is going away... conclusion, the book was writing in 2018 so major leading browsers
+    should have implemented the stable form of flex box property  */
+.site-nav {
+    display: -webkit-flex; /* safari 8 fix */
+    display: flex;
+    padding: .5em; 
+    list-style-type: none;
+    background-color: #5f4b44;      
+    /*Makes site-nav the flex container and its children the flex items*/
+}
+.site-nav > li {
+    margin-top: 0;
+}
+.site-nav > li > a {
+    display: block;      /* Makes links block level so they add to the parent elements’ height => inline elements dosent add height*/
+    padding: .5em 1em;   /* Adds padding inside the links*/
+    background-color: #cc6b5a;
+    color: white;
+    text-decoration: none;
+    /* have used descendant combinators > to ensure they only target direct class element, its probably not strictly necessary, but for future changes*/
+}
+.site-nav > li + li {
+    margin-left: 1.5em; /* Targets every list item that follows another list item (that is, all but the first)*/
+}
+.site-nav > .nav-right{
+    margin-left: auto;  /* Auto margins inside a flexbox will fill the available space.*/
+}
+.tile {
+    padding: 1.5em;
+    background-color: #fff;
+    /* Adds a background color and padding to the three tiles */
+}
+.flex {
+    display: flex;
+    /* Applies a flexbox layout to the main container */
+}
+.flex > * + * {
+    margin-top: 0;
+    margin-left: 1.5em;
+    /* Removes the top margin and applies space between the flex items */
+} 
+/*  NOTE: When it comes to CSS, it’s important to consider not only the specific content you have on the page now, but also what will happen as that
+    content changes, or as the stylesheet is applied to similar pages. You need to decide how you want things like these two columns to behave under
+    various circumstances.*/
+
+/*  flex is shorthand for three different properties, flex-grow, flex-shrink, flex-basis, in which flex-basis serves as the base for the other two props
+    flex property controls the properties along the main axes that is the width--- when elements are given the property of flex basis, they may later need
+    to grow or shrink to fill or fit the flex container*/
+
+/*  ===>    flex-basis sets basic width
+    ===>    flex-grow value acts on the remaining space and determines if a flex item should grow
+    ===>    flex-shrink acts on a row with an over-flow problem and determines if one/more particular flex items should shrink
+*/
+
+/*  If an item has a flex-grow of 0, it won’t grow past its flex basis. If any item have a non-zero growth factor, those items will grow until all of
+    the remaining space is used up. This means the flex items will fill the width of the container*/
+
+/*  TIP:: Favor the use of the shorthand flex property instead of individually declaring flex-grow, flex-shrink, or flex-basis. Unlike most shorthand
+    properties, these aren’t set to their initial values when omitted. Instead, the shorthand assigns useful default values for any of the three that
+    you omit: flex-grow of 1, flex-shrink of 1, and a flex-basis of 0%. These are most commonly what you’ll need.*/
+.column-main {
+    flex: 2 1 0%; /* <== listing 5.7 */ /* flex: 66.67%, Equivalent to flex: 1 1 66.67% */ /* <== listing 5.8*/
+}
+.column-sidebar {
+    flex: 1;      /* flex: 33.33%, Equivalent to flex: 1 1 33.33% */
+    display: flex;
+    flex-direction: column; /* A flex item of the outer flexbox and now a flex container for the new inner one */
+}
+.column-sidebar > .tile {
+    flex: 1; /* Applies flex-grow to the items within*/ /* My Note: flex-direction:columns; allows flex properties to be added to the height rather than
+    the width */
+} 
+/*  listing 5.7 is 3 em wider than that in listing 5.8—the size of its left and right padding.  If you need your measurements to be precise,
+    either ensure the paddings are equal or use the flex basis method shown in listing 5.8. */
+
+/* some practical uses: You can make use of the flex property in countless ways:
+   => You can define proportional columns using flex-grow values or flex-basis percentages
+   => You can define fixed width columns and “fluid” columns that scale with the viewport.
+   => You can build a grid system, much like the one you built in chapter 4, using flexbox instead of floats. reference page 130 {158}*/
+
+/* when working with vetical flexbox, there is a particular difference to keep in mind, in CSS generally working with height is fundamentally 
+   different than working width,  A flex container will be 100% the available width, but the height is determined naturally by its contents.
+   flex-grow and flex-shrink applied to the items will have no effect unless something else forces the height of the flex container to a specific size.
+   This something is the "outer flex-box" */
+
+/* By the way:: standard grammatical rules in the HTML have you to capitalize text then use css to manipulate it*/
+/* Blacklist approach targets all except, while whitelist approach targets all*/
+.login-form  h3 {
+    margin: 0;
+    font-size: .9em;
+    font-weight: bold;
+    text-align: right;
+    text-transform: uppercase;
+} /* making the heading bold, right aligned and all caps */
+.login-form input:not([type=checkbox]):not([type=radio]) { /* :not() pseudo class combined with attribute selector*/ /* considering other future markup*/
+    display: block;
+    width: 100%;
+    margin-top: 0;
+} /* Styles all text-like inputs (not checkboxes or radio buttons) */
+.login-form label{
+    text-transform: uppercase;
+    color: rgb(201, 151, 71);
+}
+.login-form button {
+    margin-top: 1em;
+    border: 1px solid #cc6b5a;
+    background-color: white;
+    padding: .5em 1em;
+    cursor: pointer;
+}/* stlyes the button */
+ 
+/* other details: get familiar with the topics covered so far and get a sense of the other funtions flex offers, don't bother commiting them to memory,
+   you can returm back to the page when you find you need them occasionally.....*/ /* page 136 {164} */
+
+.centered {
+    text-align: center;
+}
+.cost {
+    display: flex;
+    justify-content: center;   /* centers flex item on both the main and the cross axis*/
+    align-items: center;        
+    line-height: .7;
+} 
+.cost > span {
+    margin-top: 0;
+}/* overrides the lobotomized owl effect */
+.cost-currency{
+font-size: 2rem;
+}
+.cost-dollars {
+    font-size: 4rem;
+}
+.cost-cents {
+    font-size: 1.5rem;
+    align-self: flex-start; /* Overrides align-items for this item, aligning it to the top instead of center */
+}
+.cta-button {
+    display: block;
+    background-color: #cc6b5a;
+    color: white;
+    padding: .5em 1em;
+    text-decoration: none;
+}
+/* A couple of things to be aware of:: caution!!! you can trust the normal document flow and only add flexbox where you know you’ll need it.  Once you’re 
+   familiar with it, you might be tempted to start using it for everything on the page. */
+
+/*  Rather than spend a lot of time discussing bugs you may or may not ever need to deal with check ==> https://github.com/philipwalton/flexbugs. If you
+    ever find your flexbox layout behaving strangely in a particular browser, visit this page and see if you’ve encountered one of these browser bugs. */
+
+/* Full-page layout::  Jake Archibald, a developer advocate for Google Chrome, has written about this at 
+   https://jakearchibald.com/2014/dont-use-flexbox-for-page-layout/. You can see examples of this happening in that article. suggestion he gives is to
+   favor grid layout for the full page layout. */
+
+/* NOTE::: This behavior is only an issue with multiple columns in a row. It doesn’t occur with multiple rows in a column (flex-direction: column) for 
+   the main page layout. */
+
+/* The flex-flow property is shorthand for both flex-direction and flex-wrap.*/
+
+/* Spacing is applied after margins and flex-grow values are calculated. This means if any item have a non-zero flex-grow value, or any items have an
+   auto margin on the main axis, then justify-content has no effect.*/
+
+/* Whereas justify-content controls item alignment along the main axis, align-items adjusts their alignment along the cross axis.*/
+
+/* */
+
+/*  
+Summary
+ Use flexbox for versatile, easy-to-control layout of page content.
+ Autoprefixer can simplify flexbox support for older browsers.
+ Use flex to specify almost any imaginable combination of flex item sizes.
+ Use nested flexboxes to piece together more complicated layouts and to fill the heights of naturally sized boxes.
+ Flexbox automatically creates columns of equal height.
+ Use align-items or align-self to vertically center a flex item inside its flex container.
+*/
